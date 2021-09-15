@@ -36,5 +36,8 @@
             height: 38px;
             background: green;
         }
+        .btn-secondary:focus{
+            box-shadow: none;
+        }
     }
 </style>

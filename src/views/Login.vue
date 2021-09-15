@@ -1,11 +1,11 @@
 <template>
   <form @submit.prevent="submit()">
     <div class="login-page col-sm-12">
-        <div class="col-sm-6 row">
-            <div class="col-sm-12 mt-2 mb-2">
+        <div class="col-sm-6 divLogin row">
+            <div class="col-sm-12 mt-3 mb-2">
                 Login
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-12 row">
                 <div class="col-sm-12 mb-2 mt-2">
                     <inputSimple
                         required
@@ -24,10 +24,22 @@
                         v-model="form.password"
                         />
                 </div>
-
-                <buttonSimple
-                    text="Login">
-                </buttonSimple>
+                <div class="col-sm-12 mt-3">
+                    <buttonSimple
+                        text="Login"
+                        @clickButton="submit">
+                    </buttonSimple>
+                </div>
+            </div>
+            <div class="col-sm-12 row">
+                <div class="col-sm-8 mt-3 pl-0 al-l cursor-pointer"
+                    @click='esqueceuSenha'>
+                    Esqueceu a senha?
+                </div>
+                <div class="col-sm-4 mt-3 pr-0 cursor-pointer"
+                    @click='cadastrar'>
+                    Cadastrar
+                </div>
             </div>
         </div>
     </div>
@@ -62,12 +74,21 @@ import buttonSimple from '@/components/ButtonSimple.vue'
             },
 
             async submit () {
-                try {
-                    await this.ActionDoLogin(this.form)
-                    this.$router.push({ name: 'login' })
-                } catch (err) {
-                    alert(err.data ? err.data.message : 'Não foi possível fazer login')
-                }
+                this.$router.push({ name: 'agenda' })
+                // try {
+                //     await this.ActionDoLogin(this.form)
+                //     this.$router.push({ name: 'login' })
+                // } catch (err) {
+                //     alert(err.data ? err.data.message : 'Não foi possível fazer login')
+                // }
+            },
+
+            esqueceuSenha(){
+                console.log('Esqueceu a senhaaa')
+            },
+
+            cadastrar(){
+                console.log('Cadastrar')
             }
         }
     };
@@ -75,12 +96,17 @@ import buttonSimple from '@/components/ButtonSimple.vue'
 
 <style lang="scss">
     .login-page {
-        height: 100vh;
+        height: 90vh;
+        width: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        div{
+        .divLogin{
             background: black;
+            height: 50vh;
+            width: 10vh;
+        }
+        div{
             color: #fff;
             font-weight: 200;
         }

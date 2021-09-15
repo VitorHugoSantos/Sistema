@@ -1,13 +1,17 @@
 <template>
   <div id="app">
+    <NavBar/>
     <router-view> </router-view>
   </div>
 </template>
 
 <script>
-
+  import NavBar from '@/components/NavBar.vue'
 export default {
   name: 'App',
+  components:{
+    NavBar,
+  }
 }
 </script>
 
@@ -16,6 +20,8 @@ export default {
   font-family: sans-serif;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.cursor-pointer{
+  cursor: pointer;
 }
 </style>
