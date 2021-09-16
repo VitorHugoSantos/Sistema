@@ -1,5 +1,10 @@
 <template>
 	<div id="agenda" class="nopadding">
+        <div>
+            <selectAll 
+                :options='optionsTeste'
+                @changeSelect="selecionados"/>
+        </div>
         <div id="app">
             <CalendarView
                 :show-date="showDate"
@@ -18,12 +23,14 @@
 	</div>
 </template>
 <script>
-import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
+    import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
+    import selectAll from '@/components/SelectAll.vue'
 	export default {
 		name: 'agenda',
         components: {
 			CalendarView,
 			CalendarViewHeader,
+            selectAll,
 		},
 
 		data: function() {
@@ -35,6 +42,13 @@ import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
                     title: 'Event',
                     startDate: new Date(),
                 },
+                ],
+                optionsTeste:[
+                    { name: 'Vue.js', value: '1' },
+                    { name: 'Rails', value: '2' },
+                    { name: 'Sinatra', value: '3' },
+                    { name: 'Laravel', value: '4', $isDisabled: true },
+                    { name: 'Phoenix', value: '5' }
                 ]
             }
 		},
@@ -58,6 +72,10 @@ import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
                 console.log('objt', this.objt[0].startDate, 'item', date)
                 this.objt[0].startDate = date
             },
+
+            selecionados(selecionados){
+                console.log(selecionados)
+            }
 		}
 	}
 </script>
