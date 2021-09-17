@@ -12,8 +12,8 @@ Componente do select
 */
 
 <template>
-  <div>
-    <label>Select</label>
+  <div id="select">
+    <label>{{descricao}}</label>
     <multiselect 
         v-model          ="valoresSelecionados"
         placeholder      ="Selecione"
@@ -21,8 +21,7 @@ Componente do select
         label            ="name"
         select-label     ="V"
         deselectLabel    ="X"
-        selectedLabel    ='V
-        '
+        selectedLabel    ='V'
         :loading         ="loading"
         :options         ="options" 
         :close-on-select ="!multiple"
@@ -71,6 +70,11 @@ Componente do select
         disabled:{
             type: Boolean,
             default: false,
+        },
+
+        descricao:{
+            type: String,
+            default: "",
         }
 
     },
@@ -87,6 +91,8 @@ Componente do select
      Add Multiselect CSS. Can be added as a static asset or inside a component. -->
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
+#select{
+    text-align: left;
     .multiselect{
         // ícone do select
         .multiselect__select{
@@ -130,4 +136,5 @@ Componente do select
             }
         }
     }
+}
 </style>

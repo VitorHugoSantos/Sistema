@@ -15,11 +15,20 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
-  font-family: sans-serif;
+  font-family: Courier, sans-serif;
   text-align: center;
   color: #2c3e50;
+  margin: 0px;
+  height: 100vh;
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  font-size: 12px;
+  hr{
+    color: #009933;
+  }
 }
 .cursor-pointer{
   cursor: pointer;

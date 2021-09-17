@@ -1,11 +1,10 @@
 <template>
-	<div id="agenda" class="nopadding">
-        <div>
-            <selectAll 
-                :options='optionsTeste'
-                @changeSelect="selecionados"/>
+	<div id="agendamento" class="m-4">
+        <div class="titulo">
+            Agendamentos
         </div>
-        <div id="app">
+        <div><hr></div>
+        <div id="agenda" class="col-sm-12">
             <CalendarView
                 :show-date="showDate"
                 :items="objt"
@@ -24,13 +23,13 @@
 </template>
 <script>
     import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
-    import selectAll from '@/components/SelectAll.vue'
+    // import panel from '@/components/Panel.vue'
 	export default {
 		name: 'agenda',
         components: {
 			CalendarView,
 			CalendarViewHeader,
-            selectAll,
+            // panel,
 		},
 
 		data: function() {
@@ -39,7 +38,7 @@
                 objt:[
                 {
                     id: '2',
-                    title: 'Event',
+                    title: 'Raísa <p> Penteado',
                     startDate: new Date(),
                 },
                 ],
@@ -80,66 +79,98 @@
 	}
 </script>
 <style lang="scss">
-	#app {
-		font-family: 'Avenir', Helvetica, Arial, sans-serif;
-		color: #2c3e50;
-		height: 67vh;
-		width: 90vw;
-		margin-left: auto;
-		margin-right: auto;
-
-	}
-    // Calendario
-    .cv-wrapper{
-        // Cabeçalho
-        .cv-header{
-            text-align: right;
-            .cv-header-nav{
-                width: 35%;
-                .previousYear{
-                    display: none;
-                }
-                .previousPeriod{
-                }
-                .nextPeriod{
-                }
-                .nextYear{
-                    display: none;
-                }
-                .currentPeriod{
-                }
-            }
-            .periodLabel{
-                display: block;
-                text-align: center;
-            }
+    #agendamento{
+        .titulo{
+            font-size: 18px;
+            text-align: left;
         }
-        //Dias da semana
-        .cv-header-days{
-            .cv-header-day{
-                border-radius: 5px;
-                background: #f0f0f0;
-            }
-        }
-        //Semana do calendario
-        .cv-weeks{
-            .cv-week{
-                .cv-weekdays{
-                    overflow-y: scroll;
-                    text-align: center;
-                    // Dia do calendario
-                    .cv-day{
-                        border-radius: 5px;
-                        // Número do dia
-                        .cv-day-number{
-                            font-weight: bold;
+        #agenda{
+            height :  67vh;
+            // Calendario
+            .cv-wrapper{
+                // Cabeçalho
+                .cv-header{
+                    background-color: #737373;
+                    .cv-header-nav{
+                        width: 10%;
+                        text-align: left;
+                        margin-left: 30px;
+                        .previousYear{
+                            display: none;
+                        }
+                        .previousPeriod{
+                            background: transparent;
+                            color: #004d1a;
+                            border: none;
+                            font-size: 20px;
+                            padding: 0px;
+                            margin-right: 20px;
+                        }
+                        .nextPeriod{
+                            background: transparent;
+                            color: #004d1a;
+                            border: none;
+                            font-size: 20px;
+                            padding: 0px;
+                            margin-left: 20px;
+                        }
+                        .nextYear{
+                            display: none;
+                        }
+                        .currentPeriod{
+                            display: none;
                         }
                     }
-                    // Item do dia
-                    .cv-item{
-                        margin-left: 10px;
-                        width: 80px;
-                        height: 60px;
+                    .periodLabel{
+                        display: block;
+                        text-align: left;
+                        color: #004d1a;
+                        font-size: 16px;
+                    }
+                }
+                //Dias da semana
+                .cv-header-days{
+                    overflow-y: scroll;
+                    .cv-header-day{
+                        background-color: #999999;
+                        color: #004d1a;
+                    }
+                }
+                //Semana do calendario
+                .cv-weeks{
+                    .cv-week{
+                        .cv-weekdays{
+                            overflow-y: scroll;
+                            text-align: center;
+                            // Dia do calendario
+                            .cv-day{
+                                border-radius: 5px;
+                                box-shadow: 5px 3px 3px #f0f0f0;
+                                margin: 2px;
+                                // Número do dia
+                                .cv-day-number{
+                                    color: #004d1a;
+                                }
+                            }
+                            .cv-day:hover{
+                                border-radius: 5px;
+                                box-shadow: inset 10px 5px 5px #f0f0f0;
+                                cursor: pointer;
+                            }
+                            // Item do dia
+                            .cv-item{
+                                border-radius: 5px;
+                                margin-left: 5px;
+                                margin-top: 6px;
+                                width: 12%;
+                                height: 50%;
+                                font-size: 10px;
+                            }
+                            .cv-item:hover{
+                                background-color: #f0f0f0;
+                                cursor: grab;
+                            }
+                        }
                     }
                 }
             }

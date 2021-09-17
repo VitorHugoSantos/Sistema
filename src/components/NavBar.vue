@@ -1,13 +1,12 @@
 <template>
-    <div>
-        <b-navbar toggleable="lg" type="dark" variant="dark">
-            <b-navbar-brand href="#">NavBar</b-navbar-brand>
+    <div id="menu">
+        <b-navbar toggleable="sm">
+            <b-navbar-brand href="#">Agendamentos</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
-                    <b-nav-item href="#">Agendamentos</b-nav-item>
                     <b-nav-item-dropdown href="#" text="Cadastros">
                         <b-dropdown-item href="#">Acessórios</b-dropdown-item>
                         <b-dropdown-item href="#">Gastos</b-dropdown-item>
@@ -51,5 +50,42 @@
 </script>
 
 <style lang="scss">
-
+#menu{
+    .navbar{
+        background-color: #262626;
+        .navbar-brand{
+            color: #fff;
+        }
+        .navbar-collapse{
+            .navbar-nav{
+                .nav-item{
+                    .nav-link{
+                        box-shadow: none;
+                        color: #fff;
+                        padding: 0px;
+                        margin-right: 20px;
+                    }
+                    .dropdown-menu{
+                        opacity: 0.9;
+                        border-radius: 0px;
+                        padding: 0px;
+                        font-size: 12px;
+                        font-weight: bold;
+                        .dropdown-item{
+                            border-bottom: 1px solid #000
+                        }
+                    }
+                    .dropdown-item:hover{
+                        background: #d9d9d9;
+                    }
+                }
+                .nav-item:hover{
+                    ul.dropdown-menu {
+                        display: block;    
+                    }
+                }
+            }
+        }
+    }
+}
 </style>
