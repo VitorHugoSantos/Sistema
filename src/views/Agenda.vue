@@ -4,6 +4,10 @@
             Agendamentos
         </div>
         <div><hr></div>
+        <div>
+            <inputDataPeriodo 
+                @changeData="data"/>
+        </div>
         <div id="agenda" class="col-sm-12">
             <CalendarView
                 :show-date="showDate"
@@ -24,12 +28,14 @@
 <script>
     import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
     // import panel from '@/components/Panel.vue'
+    import inputDataPeriodo from "@/components/Data/InputDataPeriodo.vue"
 	export default {
 		name: 'agenda',
         components: {
 			CalendarView,
 			CalendarViewHeader,
             // panel,
+            inputDataPeriodo,
 		},
 
 		data: function() {
@@ -53,6 +59,9 @@
 		},
 
 		methods: {
+            data(data){
+                console.log(data)
+            },
 			setShowDate(d) {
 				this.showDate = d;
 			},
