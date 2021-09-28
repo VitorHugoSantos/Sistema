@@ -1,5 +1,7 @@
 <template id="panel">
   <div>
+    <slot>
+    </slot>
   </div>
 </template>
 
@@ -21,5 +23,6 @@
 <style lang="scss">
     #panel{
         padding: 5px;
+        background: #000;
     }
 </style>

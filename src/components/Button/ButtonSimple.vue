@@ -32,9 +32,11 @@
     #ButtonSimple{
         .btn{
             border-radius: 0px;
-            width: 150px;
-            height: 38px;
+            width: 100px;
+            height: 30px;
             background: green;
+            padding: 0px;
+            font-size: 14px;
         }
         .btn-secondary:focus{
             box-shadow: none;

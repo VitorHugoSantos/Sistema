@@ -1,41 +1,37 @@
 <template>
-	<div id="agendamento" class="m-4">
-        <div class="titulo">
-            Agendamentos
+    <panel>
+        <div id="agendamento" class="m-4">
+            <div class="titulo ml-3">
+                Agendamentos
+            </div>
+            <div><hr></div>
+            <div id="agenda" class="col-sm-12">
+                <CalendarView
+                    :show-date="showDate"
+                    :items="objt"
+                    :enable-drag-drop='true'
+                    @click-date="novoAgendamento"
+                    @click-item="itemCalendario"
+                    @drop-on-date="onDrop">
+                    <template #header="{ headerProps }">
+                        <CalendarViewHeader
+                            :header-props="headerProps"
+                            @input="setShowDate" />
+                    </template>
+                </CalendarView>
+            </div>
         </div>
-        <div><hr></div>
-        <div>
-            <inputDataPeriodo 
-                @changeData="data"/>
-        </div>
-        <div id="agenda" class="col-sm-12">
-            <CalendarView
-                :show-date="showDate"
-                :items="objt"
-                :enable-drag-drop='true'
-                @click-date="novoAgendamento"
-                @click-item="itemCalendario"
-                @drop-on-date="onDrop">
-                <template #header="{ headerProps }">
-                    <CalendarViewHeader
-                        :header-props="headerProps"
-                        @input="setShowDate" />
-                </template>
-            </CalendarView>
-        </div>
-	</div>
+    </panel>
 </template>
 <script>
     import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
-    // import panel from '@/components/Panel.vue'
-    import inputDataPeriodo from "@/components/Data/InputDataPeriodo.vue"
+    import panel from '@/components/Panel/Panel.vue'
 	export default {
 		name: 'agenda',
         components: {
 			CalendarView,
 			CalendarViewHeader,
-            // panel,
-            inputDataPeriodo,
+            panel,
 		},
 
 		data: function() {
@@ -59,15 +55,13 @@
 		},
 
 		methods: {
-            data(data){
-                console.log(data)
-            },
 			setShowDate(d) {
 				this.showDate = d;
 			},
 
-            novoAgendamento(data){
-                console.log(data)
+            novoAgendamento(){
+                this.$router.push({ name: 'acessorios' })
+
             },
 
             itemCalendario(item){

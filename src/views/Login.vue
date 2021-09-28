@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import inputSimple from '@/components/InputSimple.vue'
-import buttonSimple from '@/components/ButtonSimple.vue'
+import inputSimple from '@/components/Input/InputSimple.vue'
+import buttonSimple from '@/components/Button/ButtonSimple.vue'
     export default {
         components: {
             inputSimple,
@@ -74,7 +74,7 @@ import buttonSimple from '@/components/ButtonSimple.vue'
             },
 
             async submit () {
-                this.$router.push({ name: 'agenda' })
+                this.$router.push({ name: 'agendamento' })
                 // try {
                 //     await this.ActionDoLogin(this.form)
                 //     this.$router.push({ name: 'login' })

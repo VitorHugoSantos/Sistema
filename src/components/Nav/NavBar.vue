@@ -1,16 +1,17 @@
 <template>
     <div id="menu">
         <b-navbar toggleable="sm">
-            <b-navbar-brand href="#">Agendamentos</b-navbar-brand>
+            <b-navbar-brand href="#" @click='agendamento'>Agendamentos</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
                     <b-nav-item-dropdown href="#" text="Cadastros">
-                        <b-dropdown-item href="#">Acessórios</b-dropdown-item>
-                        <b-dropdown-item href="#">Gastos</b-dropdown-item>
-                        <b-dropdown-item href="#">Recebimentos</b-dropdown-item>
+                        <b-dropdown-item href="#" @click='acessorios'>Acessórios</b-dropdown-item>
+                        <b-dropdown-item href="#" @click='cadastroAgendamentos'>Agendar horário</b-dropdown-item>
+                        <b-dropdown-item href="#" @click='acessorios'>Gastos</b-dropdown-item>
+                        <b-dropdown-item href="#" @click='acessorios'>Recebimentos</b-dropdown-item>
                     </b-nav-item-dropdown>
                     <b-nav-item-dropdown href="#" text="Relatórios">
                         <b-dropdown-item href="#">Procedimentos realizados</b-dropdown-item>
@@ -45,6 +46,17 @@
         }),
 
         methods: {
+            agendamento(){
+                this.$router.push({ name: 'agendamento' })
+            },
+
+            acessorios(){
+                this.$router.push({ name: 'acessorios' })
+            },
+
+            cadastroAgendamentos(){
+                this.$router.push({ name: 'cadastroAgendamentos' })
+            },
         }
     };
 </script>

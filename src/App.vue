@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import NavBar from '@/components/NavBar.vue'
+  import NavBar from '@/components/Nav/NavBar.vue'
 export default {
   name: 'App',
   components:{
@@ -17,7 +17,7 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: Courier, sans-serif;
+  font-family: nexabook, Courier, sans-serif;
   text-align: center;
   color: #2c3e50;
   margin: 0px;
@@ -26,11 +26,18 @@ export default {
   margin-left: 0px;
   margin-right: 0px;
   font-size: 12px;
-  hr{
-    color: #009933;
-  }
+}
+hr{
+  background-color: #009933;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 .cursor-pointer{
   cursor: pointer;
+}
+.titulo{
+  font-size: 18px;
+  text-align: left;
+  vertical-align: middle;
 }
 </style>

@@ -20,10 +20,10 @@
 
 <template>
   <div class="block">
-    <div class="col-sm-12">
+    <div class="col-sm-12 p-0">
       {{titulo}}
     </div>
-    <div class="col-sm-12">
+    <div class="col-sm-12 p-0 dataSimple">
       <el-date-picker
         v-model="data"
         type="date"
@@ -71,6 +71,12 @@
     margin: 5px;
     div{
       text-align: left;
+    }
+  }
+  .dataSimple{
+    input{
+      width: 100%;
+      padding: 0px;
     }
   }
 </style>

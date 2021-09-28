@@ -32,7 +32,7 @@
 
         type:{
             type: String,
-            default: ''
+            default: 'text'
         }
     },
 

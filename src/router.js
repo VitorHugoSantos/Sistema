@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
-import Agenda from './views/Agenda.vue';
+import Agendamento from './views/Agendamento/Agenda.vue';
+import Acessorios from './views/Cadastros/Acessorios/Acessorios.vue';
+import CadastroAgendamento from './views/Cadastros/Agendamentos/Agendamento.vue'
 
 Vue.use(Router);
 
@@ -17,9 +19,25 @@ export default new Router({
 
         //Agenda
         {
-            path: '/agenda',
-            name: 'agenda',
-            component : Agenda,
+            path: '/agendamento',
+            name: 'agendamento',
+            component: Agendamento,
+            children: [
+                //cadastros
+                
+              ]
+        },
+        // Cadastro de acessorios
+        {
+            path: '/agendamento/cadastros/acessorios',
+            name: 'acessorios',
+            component: Acessorios,
+        },
+        // Cadastro de agendamentos
+        {
+            path: '/agendamento/cadastros/agendamentos',
+            name: 'cadastroAgendamentos',
+            component: CadastroAgendamento,
         },
     ]
 })
