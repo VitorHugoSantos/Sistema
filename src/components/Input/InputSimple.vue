@@ -51,6 +51,7 @@
             .form-control{
                 border-radius: 0px !important;
                 background: none;
+                height: 40px;
             }
 
         }

@@ -14,7 +14,7 @@
             <div class="col-sm-12 row pr-0">
                 <div class="col-sm-4">
                     <inputSimple 
-                        text='Nome do acessório'
+                        text='Nome do acessório*'
                         placeholder='Digite aqui'/>
                 </div>
                 <div class="col-sm-4">
@@ -24,11 +24,13 @@
                 </div>
                 <div class="col-sm-4">
                     <inputSimple 
-                        text='Valor'
+                        text='Valor*'
                         type='number'
                         placeholder='Digite aqui'/>
                 </div>
             </div>
+            <div><hr></div>
+            (*) Campos obrigatórios
         </div>
     </panel>
 </template>

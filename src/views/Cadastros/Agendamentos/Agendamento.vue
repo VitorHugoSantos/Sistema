@@ -14,50 +14,52 @@
             <div class="col-sm-12 row pr-0" align='left'>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
-                        text='Nome do acessório'
+                        text='Nome do acessório*'
                         placeholder='Digite aqui'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <selectAll 
-                        descricao='Comprimento do cabelo'
+                        descricao='Comprimento do cabelo*'
                         placeholder='Digite aqui'
                         :options='optiosComprimentoCabelo'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <selectAll 
-                        descricao='Tipo de penteado'
+                        descricao='Tipo de penteado*'
                         placeholder='Digite aqui'
                         :options='optionsTipoPenteado'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <inputDataSimples 
-                        titulo='Data e hora do penteado'/>
+                        titulo='Data e hora do penteado*'/>
                 </div>
             </div>
-            <div class="col-sm-12 row pr-0" align='left'>
+            <div class="col-sm-12 row pr-0 mt-2" align='left'>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
-                        text='Número de telefone'
+                        text='Número de telefone*'
                         placeholder='Digite aqui'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
-                        text='Tempo deslocamento'
+                        text='Tempo deslocamento*'
+                        type='time'
                         placeholder='Digite aqui'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
-                        text='Tempo serviço'
+                        text='Tempo serviço*'
+                        type='time'
                         placeholder='Digite aqui'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
-                        text='Hora do evento'
+                        text='Hora do evento*'
+                        type='time'
                         placeholder='Digite aqui'/>
                 </div>
             </div>
-            <div><hr></div>
-            <div class="col-sm-12 row pl-0">
+            <div class="col-sm-12 row pl-0 mt-2">
                 <div class="col-sm-3 pl-0">
                     <b-form-checkbox
                         id="testePenteado"
@@ -84,6 +86,7 @@
                         class="col-sm-12">
                         <inputSimple 
                             text='Tempo estimado'
+                            type='time'
                             placeholder='Digite aqui'/>
                     </div>
                 </div>
@@ -102,6 +105,8 @@
                     </div>
                 </div>
             </div>
+            <div><hr></div>
+            (*) Campos obrigatórios
         </div>
     </panel>
 </template>

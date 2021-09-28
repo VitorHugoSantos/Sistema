@@ -13,7 +13,7 @@ Componente do select
 
 <template>
   <div id="select">
-    <label>{{descricao}}</label>
+    {{descricao}}
     <multiselect 
         v-model          ="valoresSelecionados"
         placeholder      ="Selecione"
@@ -101,6 +101,7 @@ Componente do select
         // Select
         .multiselect__tags{
             border-radius: 0px;
+            height: 40px;
             //Input de busca
             .multiselect__input{
 

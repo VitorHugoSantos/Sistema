@@ -25,6 +25,7 @@
     </div>
     <div class="col-sm-12 p-0 dataSimple">
       <el-date-picker
+        style="width:103%;"
         v-model="data"
         type="date"
         format="dd/MM/yyyy"
@@ -68,15 +69,8 @@
 </script>
 <style lang="scss">
   .block{
-    margin: 5px;
     div{
       text-align: left;
-    }
-  }
-  .dataSimple{
-    input{
-      width: 100%;
-      padding: 0px;
     }
   }
 </style>
