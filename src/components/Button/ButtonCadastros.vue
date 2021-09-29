@@ -51,9 +51,10 @@
                 border-radius: 0px;
                 width: 100px;
                 height: 30px;
-                background: red;
+                background: #D76E6E;
                 padding: 0px;
                 font-size: 14px;
+                border: 1px solid #D76E6E;
             }
         }
         .green{
@@ -61,9 +62,10 @@
                 border-radius: 0px;
                 width: 100px;
                 height: 30px;
-                background: green;
+                background: #78B365;
                 padding: 0px;
                 font-size: 14px;
+                border: 1px solid #78B365;
             }
         }
     }

@@ -60,7 +60,7 @@
 			},
 
             novoAgendamento(){
-                this.$router.push({ name: 'acessorios' })
+                this.$router.push({ name: 'cadastroAgendamentos' })
 
             },
 

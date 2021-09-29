@@ -10,8 +10,8 @@
                     <b-nav-item-dropdown href="#" text="Cadastros">
                         <b-dropdown-item href="#" @click='acessorios'>Acessórios</b-dropdown-item>
                         <b-dropdown-item href="#" @click='cadastroAgendamentos'>Agendar horário</b-dropdown-item>
-                        <b-dropdown-item href="#" @click='acessorios'>Gastos</b-dropdown-item>
-                        <b-dropdown-item href="#" @click='acessorios'>Recebimentos</b-dropdown-item>
+                        <b-dropdown-item href="#" @click='cadastroGastos'>Gastos</b-dropdown-item>
+                        <b-dropdown-item href="#" @click='cadastroRecebimentos'>Recebimentos</b-dropdown-item>
                     </b-nav-item-dropdown>
                     <b-nav-item-dropdown href="#" text="Relatórios">
                         <b-dropdown-item href="#">Procedimentos realizados</b-dropdown-item>
@@ -27,7 +27,7 @@
                     <template #button-content>
                         <em>Adm</em>
                     </template>
-                    <b-dropdown-item href="#">Sair</b-dropdown-item>
+                    <b-dropdown-item href="#" @click="sair">Sair</b-dropdown-item>
                     <b-dropdown-item href="#">Editar</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
@@ -57,6 +57,18 @@
             cadastroAgendamentos(){
                 this.$router.push({ name: 'cadastroAgendamentos' })
             },
+
+            cadastroRecebimentos(){
+                this.$router.push({ name: 'cadastroRecebimentos' })
+            },
+
+            cadastroGastos(){
+                this.$router.push({ name: 'cadastroGastos' })
+            },
+
+            sair(){
+                this.$router.push({ name: 'login' })
+            }
         }
     };
 </script>

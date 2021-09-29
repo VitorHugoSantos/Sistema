@@ -6,6 +6,7 @@
         <div>
             <b-input 
                 :type="type"
+                :placeholder='placeholder'
                 @change="changeInput">
             </b-input>
         </div>
@@ -33,6 +34,11 @@
         type:{
             type: String,
             default: 'text'
+        },
+
+        placeholder:{
+            type: String,
+            default: ''
         }
     },
 

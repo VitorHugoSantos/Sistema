@@ -3,7 +3,7 @@
     <div class="login-page col-sm-12">
         <div class="col-sm-6 divLogin row">
             <div class="col-sm-12 mt-3 mb-2">
-                Login
+                <span>Login</span>
             </div>
             <div class="col-sm-12 row">
                 <div class="col-sm-12 mb-2 mt-2">
@@ -12,7 +12,7 @@
                         type="email"
                         text="Usuário"
                         @changeInput="changeEmail"
-                        placeholder="E-mail"
+                        placeholder="Usuário"
                     />
                 </div>
                 <div class="col-sm-12 mb-2 mt-2">
@@ -101,10 +101,16 @@ import buttonSimple from '@/components/Button/ButtonSimple.vue'
         display: flex;
         align-items: center;
         justify-content: center;
+        background: black;
         .divLogin{
-            background: black;
+            background: #232323;
             height: 50vh;
             width: 10vh;
+            border: 1px solid #fff;
+            span{
+                font-size: 20px;
+                font-weight: bold;
+            }
         }
         div{
             color: #fff;

@@ -104,7 +104,9 @@ Componente do select
             height: 40px;
             //Input de busca
             .multiselect__input{
-
+            }
+            .multiselect__single{
+                font-size: 12px;
             }
         }
 
@@ -116,6 +118,7 @@ Componente do select
                 .multiselect__element{
                     //Span com a escrita
                     .multiselect__option{
+                        font-size: 12px;
                     }
                     //Span com escrita com hover no icone
                     .multiselect__option--highlight::after{
