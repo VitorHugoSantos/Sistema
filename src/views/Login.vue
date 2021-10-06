@@ -27,6 +27,7 @@
                 <div class="col-sm-12 mt-3">
                     <buttonSimple
                         text="Login"
+                        width='30%'
                         @clickButton="submit">
                     </buttonSimple>
                 </div>
@@ -49,6 +50,7 @@
 <script>
 import inputSimple from '@/components/Input/InputSimple.vue'
 import buttonSimple from '@/components/Button/ButtonSimple.vue'
+import axios from 'axios'
     export default {
         components: {
             inputSimple,
@@ -74,6 +76,8 @@ import buttonSimple from '@/components/Button/ButtonSimple.vue'
             },
 
             async submit () {
+                let results = await axios.post('http://localhost:8000/api/login/users', {'aa':'bb'});
+                console.log(results)
                 this.$router.push({ name: 'agendamento' })
                 // try {
                 //     await this.ActionDoLogin(this.form)

@@ -12,21 +12,27 @@
             </div>
             <div><hr></div>
             <div class="col-sm-12 row pr-0">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <selectAll 
                         descricao='Categoria*'
                         placeholder='Digite aqui'
                         :options='optionsCategorias'/>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <selectAll 
                         descricao='Forma de pagamento*'
                         placeholder='Digite aqui'
                         :options='optionsPagamento'/>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <inputDataSimples 
                         titulo='Data*'/>
+                </div>
+                <div class="col-sm-3">
+                    <inputSimple 
+                        text='Valor*'
+                        type='number'
+                        placeholder='Digite aqui'/>
                 </div>
             </div>
             <div><hr></div>
@@ -38,6 +44,7 @@
     import panel from '@/components/Panel/Panel.vue'
     import buttonCadastro from '@/components/Button/ButtonCadastros.vue'
     import selectAll from '@/components/Select/SelectAll.vue'
+    import inputSimple from '@/components/Input/InputSimple.vue'
     import inputDataSimples from '@/components/Data/InputDataSimples.vue'
 	export default {
 		name: 'agenda',
@@ -46,6 +53,7 @@
             buttonCadastro,
             selectAll,
             inputDataSimples,
+            inputSimple,
 		},
 
 		data: function() {

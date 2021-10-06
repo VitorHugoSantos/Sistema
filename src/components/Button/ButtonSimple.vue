@@ -1,7 +1,7 @@
 <template>
     <div id="ButtonSimple">
-        <div>
-            <b-button @click="clickButton">{{text}}</b-button>
+        <div style="width:100%;">
+            <b-button :style="'width:'+width" @click="clickButton">{{text}}</b-button>
         </div>
     </div>
 </template>
@@ -17,6 +17,11 @@
         text:{
             type: String,
             required: true,
+        },
+
+        width:{
+            type: String,
+            default: '100%;'
         }
     },
 

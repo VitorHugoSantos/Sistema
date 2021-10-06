@@ -2,8 +2,15 @@
     <panel id="cadastroAgendamento">
         <div class="m-4">
             <div class="col-sm-12 row p-0 ml-3">
-                <div class="titulo col-sm-8 pl-0">
+                <div class="titulo col-sm-5 pl-0">
                     Cadastrar Agendamento
+                </div>
+                <div class="col-sm-3">
+                    <buttonSimple
+                        style="width:100%;"
+                        text="Cadastrar cliente"
+                        v-b-modal.my-modal>
+                    </buttonSimple>
                 </div>
                 <div class="col-sm-4 pr-0" align="right">
                     <buttonCadastro
@@ -13,9 +20,10 @@
             <div><hr></div>
             <div class="col-sm-12 row pr-0" align='left'>
                 <div class="col-sm-3 pr-0">
-                    <inputSimple 
-                        text='Nome do acessório*'
-                        placeholder='Digite aqui'/>
+                    <selectAll 
+                        descricao='Cliente*'
+                        placeholder='Digite aqui'
+                        :options='optiosComprimentoCabelo'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <selectAll 
@@ -35,11 +43,6 @@
                 </div>
             </div>
             <div class="col-sm-12 row pr-0 mt-2" align='left'>
-                <div class="col-sm-3 pr-0">
-                    <inputSimple 
-                        text='Número de telefone*'
-                        placeholder='Digite aqui'/>
-                </div>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
                         text='Tempo deslocamento*'
@@ -108,6 +111,29 @@
             <div><hr></div>
             (*) Campos obrigatórios
         </div>
+        <div>
+            <b-modal 
+                id="my-modal"
+                v-model="show"
+                title="Cadastrar cliente"
+                @ok="salvarCliente">
+                <div class="col-sm-12 row">
+                    <div class="col-sm-6">
+                        <inputSimple 
+                            text='Nome cliente'
+                            type='text'
+                            placeholder='Digite aqui'/>
+                    </div>
+                    <div class="col-sm-6">
+                        <inputSimple 
+                            text='Número telefone'
+                            type='number'
+                            placeholder='Digite aqui'/>
+                    </div>
+                </div>
+            </b-modal>
+        </div>
+
     </panel>
 </template>
 <script>
@@ -116,6 +142,7 @@
     import buttonCadastro from '@/components/Button/ButtonCadastros.vue'
     import selectAll from '@/components/Select/SelectAll.vue'
     import inputDataSimples from '@/components/Data/InputDataSimples.vue'
+    import buttonSimple from '@/components/Button/ButtonSimple.vue'
 	export default {
 		name: 'agenda',
         components: {
@@ -124,6 +151,7 @@
             buttonCadastro,
             selectAll,
             inputDataSimples,
+            buttonSimple,
 		},
 
 		data(){
@@ -133,6 +161,7 @@
                 optionsAcessorios:[{ name: 'Acessório 1', value: '1' },{ name: 'Acessório 2', value: '2' },],
                 testePenteado : false,
                 acessorios    : false,
+                show          : false,
             }
 		},
 
@@ -140,6 +169,10 @@
 
             cancelar(){
                 this.$router.push({ name: 'agendamento' })
+            },
+
+            salvarCliente(){
+                this.show = false
             }
 		}
 	}

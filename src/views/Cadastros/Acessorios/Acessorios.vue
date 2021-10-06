@@ -22,12 +22,6 @@
                         text='Descrição'
                         placeholder='Digite aqui'/>
                 </div>
-                <div class="col-sm-4">
-                    <inputSimple 
-                        text='Valor*'
-                        type='number'
-                        placeholder='Digite aqui'/>
-                </div>
             </div>
             <div><hr></div>
             (*) Campos obrigatórios
