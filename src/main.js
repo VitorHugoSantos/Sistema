@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/pt'
 import Vuex from 'vuex';
 import Axios from 'axios';
+import VueSweetalert2 from 'vue-sweetalert2';
 
 
 Vue.config.productionTip = false
@@ -18,6 +19,7 @@ Vue.use(IconsPlugin)
 Vue.use(ElementUI, { locale })
 Vue.use(Vuex)
 Vue.use(Axios)
+Vue.use(VueSweetalert2)
 
 new Vue({
   router,

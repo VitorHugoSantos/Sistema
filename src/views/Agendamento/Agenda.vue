@@ -26,6 +26,9 @@
 <script>
     import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
     import panel from '@/components/Panel/Panel.vue'
+    import axios from 'axios'
+    import VueSweetalert2 from 'vue-sweetalert2';
+    import { DateTime } from "luxon"
 	export default {
 		name: 'agenda',
         components: {
@@ -37,31 +40,42 @@
 		data: function() {
 			return { 
                 showDate: new Date(),
-                objt:[
-                {
-                    id: '2',
-                    title: 'Raísa <p> Penteado',
-                    startDate: new Date(),
-                },
-                ],
-                optionsTeste:[
-                    { name: 'Vue.js', value: '1' },
-                    { name: 'Rails', value: '2' },
-                    { name: 'Sinatra', value: '3' },
-                    { name: 'Laravel', value: '4', $isDisabled: true },
-                    { name: 'Phoenix', value: '5' }
-                ]
+                objt:[],
             }
 		},
 
 		methods: {
+
+            buscaAgendamentos(){
+                axios.post('http://localhost:8000/api/agenda/busca/horarios')
+                    .then(dados => {
+                        if(dados.status == 200){
+                            this.objt = dados.data.dados
+                            for(var i = 0; i < this.objt.length; i++){
+                                var data = DateTime.fromFormat(
+                                        this.objt[i].startdate, 'yyyy-LL-dd HH:mm:ss').toJSDate()
+                                var dataTitle = DateTime.fromFormat(
+                                        this.objt[i].startdate, 'yyyy-LL-dd HH:mm:ss')
+                                        .toFormat('HH:mm')
+                                this.objt[i].startDate = data
+                                this.objt[i].title = dataTitle+' '+this.objt[i].title
+                            }
+                        } else {
+                            VueSweetalert2.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Algo deu errado, tente novamente mais tarde',
+                            })
+                        }
+                    });
+            },
+
 			setShowDate(d) {
 				this.showDate = d;
 			},
 
-            novoAgendamento(){
-                this.$router.push({ name: 'cadastroAgendamentos' })
-
+            novoAgendamento(data){
+                this.$router.push({ name: 'cadastroAgendamentos', params: {data:data}})
             },
 
             itemCalendario(item){
@@ -71,14 +85,29 @@
             //Método para trocar a data do evento arrastando, 
             // é passado a data que é recebida do calendario para a prop startDate do objeto do calendario
             onDrop(item, date){
-                console.log('objt', this.objt[0].startDate, 'item', date)
-                this.objt[0].startDate = date
+                for(var i = 0; i < this.objt.length; i++){
+                    if(this.objt[i].id == item.id){
+                        this.objt[i].startDate = date
+                        var data = DateTime.fromJSDate(
+                                        this.objt[i].startDate).toFormat('yyyy-LL-dd HH:mm:ss')
+                        this.objt[i].startdate = data
+                        axios.post('http://localhost:8000/api/agenda/altera/horario',
+                                    {'dado':this.objt[i]})
+                            .then(dados => {
+                                console.log(dados)
+                            });
+                    }
+                }
             },
 
             selecionados(selecionados){
                 console.log(selecionados)
             }
-		}
+		},
+
+        mounted(){
+            this.buscaAgendamentos()
+        }
 	}
 </script>
 <style lang="scss">

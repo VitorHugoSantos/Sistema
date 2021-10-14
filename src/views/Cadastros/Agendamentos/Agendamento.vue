@@ -14,6 +14,7 @@
                 </div>
                 <div class="col-sm-4 pr-0" align="right">
                     <buttonCadastro
+                        @clickButtonSalvar  ='salvarAgendamento'
                         @clickButtonCancelar="cancelar" />
                 </div>
             </div>
@@ -23,43 +24,58 @@
                     <selectAll 
                         descricao='Cliente*'
                         placeholder='Digite aqui'
-                        :options='optiosComprimentoCabelo'/>
+                        :options='optiosCliente'
+                        @changeSelect ='changeCliente'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <selectAll 
                         descricao='Comprimento do cabelo*'
                         placeholder='Digite aqui'
-                        :options='optiosComprimentoCabelo'/>
+                        :options='optiosComprimentoCabelo'
+                        @changeSelect ='changeComprimentoCabelo'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <selectAll 
                         descricao='Tipo de penteado*'
                         placeholder='Digite aqui'
-                        :options='optionsTipoPenteado'/>
+                        :options='optionsTipoPenteado'
+                        @changeSelect ='changeTipoPenteado'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <inputDataSimples 
-                        titulo='Data e hora do penteado*'/>
+                        titulo='Data do penteado*'
+                        :value='dataNovoPentedo'
+                        @changeData='changeDataPenteado'/>
                 </div>
             </div>
             <div class="col-sm-12 row pr-0 mt-2" align='left'>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
+                        text='Hora do penteado*'
+                        type='time'
+                        placeholder='Digite aqui'
+                        @changeInput='changeHoraPenteado'/>
+                </div>
+                <div class="col-sm-3 pr-0">
+                    <inputSimple 
                         text='Tempo deslocamento*'
                         type='time'
-                        placeholder='Digite aqui'/>
+                        placeholder='Digite aqui'
+                        @changeInput='changeTempoDeslocamento'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
                         text='Tempo serviço*'
                         type='time'
-                        placeholder='Digite aqui'/>
+                        placeholder='Digite aqui'
+                        @changeInput='changeTempoServico'/>
                 </div>
                 <div class="col-sm-3 pr-0">
                     <inputSimple 
                         text='Hora do evento*'
                         type='time'
-                        placeholder='Digite aqui'/>
+                        placeholder='Digite aqui'
+                        @changeInput='changeHoraEvento'/>
                 </div>
             </div>
             <div class="col-sm-12 row pl-0 mt-2">
@@ -122,13 +138,15 @@
                         <inputSimple 
                             text='Nome cliente'
                             type='text'
-                            placeholder='Digite aqui'/>
+                            placeholder='Digite aqui'
+                            @changeInput ='changeNomeCliente'/>
                     </div>
                     <div class="col-sm-6">
                         <inputSimple 
                             text='Número telefone'
                             type='number'
-                            placeholder='Digite aqui'/>
+                            placeholder='Digite aqui'
+                            @changeInput ='changeNumeroTelefone'/>
                     </div>
                 </div>
             </b-modal>
@@ -143,6 +161,9 @@
     import selectAll from '@/components/Select/SelectAll.vue'
     import inputDataSimples from '@/components/Data/InputDataSimples.vue'
     import buttonSimple from '@/components/Button/ButtonSimple.vue'
+    import axios from 'axios'
+    import VueSweetalert2 from 'vue-sweetalert2';
+    import { DateTime } from "luxon"
 	export default {
 		name: 'agenda',
         components: {
@@ -156,25 +177,141 @@
 
 		data(){
 			return { 
-                optiosComprimentoCabelo:[{ name: 'Curto', value: '1' },{ name: 'Longo', value: '2' },],
+                optiosCliente : [],
+                optiosComprimentoCabelo:[{ name: 'Curto', value: 'C' },{ name: 'Medio', value: 'M' },{ name: 'Longo', value: 'L' }],
                 optionsTipoPenteado:[{ name: 'Tipo 1', value: '1' },{ name: 'Tipo 2', value: '2' },],
-                optionsAcessorios:[{ name: 'Acessório 1', value: '1' },{ name: 'Acessório 2', value: '2' },],
+                optionsAcessorios:[],
                 testePenteado : false,
                 acessorios    : false,
                 show          : false,
+                nomeCliente   : '',
+                numeroCliente : '',
+
+                //dados salvar
+                comprimentoCabelo : [],
+                cliente           : [],
+                tipoPenteado      : [],
+                dataPenteado      : [],
+                horaPenteado      : '',
+                tempoDeslocamento : '',
+                tempoServiço      : '',
+                horaEvento        : '',
+                dataTestePenteado : [],
+                tempoTeste        : '',
+                horaTeste         : '',
+                dataNovoPentedo   : '',
             }
 		},
 
 		methods: {
+            changeCliente(cliente){
+                this.cliente = cliente
+            },
+
+            changeComprimentoCabelo(comprimento){
+                this.comprimentoCabelo = comprimento
+            },
+
+            changeTipoPenteado(tipo){
+                this.tipoPenteado = tipo
+            },
+
+            changeDataPenteado(data){
+                this.dataPenteado = data
+            },
+
+            changeHoraPenteado(hora){
+                this.horaPenteado = hora
+            },
+
+            changeTempoDeslocamento(tempo){
+                this.tempoDeslocamento = tempo
+            },
+
+            changeTempoServico(tempo){
+                this.tempoServiço = tempo
+            },
+
+            changeHoraEvento(hora){
+                this.horaEvento = hora
+            },
+
+            salvarAgendamento(){
+                var objt = {
+                    'haicliente'   : this.cliente,
+                    'haisize'      : this.comprimentoCabelo,
+                    'haitype'      : this.tipoPenteado,
+                    'haieventtime' : this.horaEvento,
+                    'haidistime'   : this.tempoDeslocamento,
+                    'haiexetime'   : this.tempoServiço,
+                    'haistatus'    : false,
+                    'haicancelDesc' : '',
+                    'haitest'       : this.testePenteado,
+                    'dataPenteado'  : this.dataPenteado,
+                    'horaPenteado'  : this.horaPenteado,
+                    'dataTeste'     : this.dataTestePenteado,
+                    'tempoTeste'    : this.tempoTeste,
+                    'horaTeste'     : this.horaTeste,
+                }
+                axios.post('http://localhost:8000/api/cadastro/agendamento/salvar', objt)
+                    .then(dados => {
+                        if(dados.status == 201){
+                            this.$router.push({ name: 'agendamento' })
+                        } else {
+                            VueSweetalert2.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Algo deu errado, tente novamente mais tarde',
+                            })
+                        }
+                    });
+            },
 
             cancelar(){
                 this.$router.push({ name: 'agendamento' })
             },
 
+            buscaCliente(){
+                axios.post('http://localhost:8000/api/cadastro/agendamento/busca/cliente')
+                    .then(dados => {
+                        this.optiosCliente = dados.data.dados
+                    });
+            },
+
+            buscaAcessorios(){
+                axios.post('http://localhost:8000/api/cadastro/agendamento/busca/acessorios')
+                    .then(dados => {
+                        this.optionsAcessorios = dados.data.dados
+                    });
+            },
+
+            // modal
+            changeNomeCliente(nome){
+                this.nomeCliente = nome
+            },
+
+            changeNumeroTelefone(numero){
+                this.numeroCliente = numero
+            },
+
             salvarCliente(){
-                this.show = false
+                axios.post('http://localhost:8000/api/cadastro/agendamento/salvar/cliente', 
+                    {'cliname':this.nomeCliente, 'cliphone':this.numeroCliente}).then(dados => {
+                        console.log(dados)
+                    });
+            },
+		},
+
+        mounted(){
+            if(this.$route.params.data != undefined){
+                var data = DateTime.fromJSDate(
+                                        this.$route.params.data).toFormat('dd/LL/yyyy')
+                this.dataNovoPentedo = data
+                console.log('data1', this.dataNovoPentedo)
             }
-		}
+            this.buscaCliente()
+            this.buscaAcessorios()
+        }
 	}
 </script>
 <style lang="scss">

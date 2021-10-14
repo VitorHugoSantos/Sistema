@@ -56,15 +56,24 @@
             disabled:{
                 type: Boolean,
                 default: false,
+            },
+            value:{
+              type: String,
+              default: ''
             }
         },
 
         methods: {
-            changeData(data){
-                console.log(data)
-                this.$emit('changeData', data);
-            }
-        }
+          changeData(data){
+              this.$emit('changeData', data);
+          }
+        },
+
+        watch:{
+          value: function() {
+            this.data = this.value
+          }
+        },
     };
 </script>
 <style lang="scss">

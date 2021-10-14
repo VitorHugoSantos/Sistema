@@ -44,7 +44,6 @@
 
     methods:{
         changeInput(value){
-            console.log('A', value)
             this.$emit('changeInput', value)
         }
     },

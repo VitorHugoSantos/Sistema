@@ -27,7 +27,6 @@
 
     methods:{
         clickButton(){
-            console.log('A')
             this.$emit('clickButton')
         }
     },

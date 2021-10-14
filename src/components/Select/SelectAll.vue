@@ -81,7 +81,7 @@ Componente do select
 
     methods: {
         changeOptions(selecionados){
-            this.$emit('changeSelect', selecionados)
+            this.$emit('changeSelect', selecionados.value)
         }
     }
   }

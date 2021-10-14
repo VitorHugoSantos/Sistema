@@ -66,7 +66,6 @@
 
     methods: {
       changeData(date){
-        console.log(this.date)
         this.$emit('changeData', date);
       }
     },

@@ -29,12 +29,10 @@
 
     methods:{
         clickButtonCancelar(){
-            console.log('A')
             this.$emit('clickButtonCancelar')
         },
 
         clickButtonSalvar(){
-            console.log('B')
             this.$emit('clickButtonSalvar')
         }
     },
