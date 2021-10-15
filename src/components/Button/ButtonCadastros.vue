@@ -8,7 +8,8 @@
         <div class="green ml-2">
             <b-button
                 :type='type' 
-                @click="clickButtonSalvar">Salvar</b-button>
+                @click="clickButtonSalvar"
+                :disabled="disabled">Salvar</b-button>
         </div>
     </div>
 </template>
@@ -24,6 +25,10 @@
         type:{
             type: String,
             default: 'text'
+        },
+        disabled:{
+            type: Boolean,
+            default: false
         }
     },
 

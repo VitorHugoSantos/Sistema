@@ -1,5 +1,5 @@
 <template>
-    <panel id="cadastroAgendamento">
+    <panel id="cadastroAgendamento" :loading='loadingPanel'>
         <div class="m-4">
             <div class="col-sm-12 row p-0 ml-3">
                 <div class="titulo col-sm-5 pl-0">
@@ -15,7 +15,8 @@
                 <div class="col-sm-4 pr-0" align="right">
                     <buttonCadastro
                         @clickButtonSalvar  ='salvarAgendamento'
-                        @clickButtonCancelar="cancelar" />
+                        @clickButtonCancelar="cancelar"
+                        :disabled="$v.$invalid"/>
                 </div>
             </div>
             <div><hr></div>
@@ -164,8 +165,9 @@
     import axios from 'axios'
     import VueSweetalert2 from 'vue-sweetalert2';
     import { DateTime } from "luxon"
+    import { required } from 'vuelidate/lib/validators'
 	export default {
-		name: 'agenda',
+		name: 'agendamento',
         components: {
             panel,
             inputSimple,
@@ -174,6 +176,36 @@
             inputDataSimples,
             buttonSimple,
 		},
+
+        validations: {
+            cliente:{
+                required,
+            },
+
+            comprimentoCabelo:{
+                required,
+            },
+
+            tipoPenteado:{
+                required,
+            },
+
+            horaPenteado:{
+                required,
+            },
+
+            tempoDeslocamento:{
+                required,
+            },
+
+            tempoServiço:{
+                required,
+            },
+
+            horaEvento:{
+                required,
+            },
+        },
 
 		data(){
 			return { 
@@ -186,6 +218,7 @@
                 show          : false,
                 nomeCliente   : '',
                 numeroCliente : '',
+                loadingPanel  : false,
 
                 //dados salvar
                 comprimentoCabelo : [],
@@ -237,6 +270,7 @@
             },
 
             salvarAgendamento(){
+                this.loadingPanel = true
                 var objt = {
                     'haicliente'   : this.cliente,
                     'haisize'      : this.comprimentoCabelo,
@@ -256,8 +290,10 @@
                 axios.post('http://localhost:8000/api/cadastro/agendamento/salvar', objt)
                     .then(dados => {
                         if(dados.status == 201){
+                            this.loadingPanel = false
                             this.$router.push({ name: 'agendamento' })
                         } else {
+                            this.loadingPanel = false
                             VueSweetalert2.fire({
                                 icon: 'error',
                                 title: 'Oops...',
@@ -295,9 +331,21 @@
             },
 
             salvarCliente(){
+                this.loadingPanel = true
                 axios.post('http://localhost:8000/api/cadastro/agendamento/salvar/cliente', 
-                    {'cliname':this.nomeCliente, 'cliphone':this.numeroCliente}).then(dados => {
-                        console.log(dados)
+                    {'cliname':this.nomeCliente, 'cliphone':this.numeroCliente})
+                    .then(dados => {
+                        if(dados.status == 201){
+                            this.loadingPanel = false
+                            this.buscaCliente()
+                        } else {
+                            this.loadingPanel = false
+                            VueSweetalert2.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Algo deu errado, tente novamente mais tarde',
+                            })
+                        }
                     });
             },
 		},
@@ -307,7 +355,7 @@
                 var data = DateTime.fromJSDate(
                                         this.$route.params.data).toFormat('dd/LL/yyyy')
                 this.dataNovoPentedo = data
-                console.log('data1', this.dataNovoPentedo)
+                this.dataPenteado    = data
             }
             this.buscaCliente()
             this.buscaAcessorios()

@@ -58,7 +58,7 @@
                                         this.objt[i].startdate, 'yyyy-LL-dd HH:mm:ss')
                                         .toFormat('HH:mm')
                                 this.objt[i].startDate = data
-                                this.objt[i].title = dataTitle+' '+this.objt[i].title
+                                this.objt[i].title = dataTitle+' - '+this.objt[i].title
                             }
                         } else {
                             VueSweetalert2.fire({
@@ -87,10 +87,14 @@
             onDrop(item, date){
                 for(var i = 0; i < this.objt.length; i++){
                     if(this.objt[i].id == item.id){
+                        console.log(date)
                         this.objt[i].startDate = date
                         var data = DateTime.fromJSDate(
-                                        this.objt[i].startDate).toFormat('yyyy-LL-dd HH:mm:ss')
-                        this.objt[i].startdate = data
+                                        this.objt[i].startDate).toFormat('yyyy-LL-dd')
+                        var hora = DateTime.fromFormat(
+                                        this.objt[i].startdate, 'yyyy-LL-dd HH:mm:ss')
+                                        .toFormat('HH:mm')
+                        this.objt[i].startdate = data+' '+hora
                         axios.post('http://localhost:8000/api/agenda/altera/horario',
                                     {'dado':this.objt[i]})
                             .then(dados => {

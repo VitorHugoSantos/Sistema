@@ -1,7 +1,9 @@
 <template id="panel">
   <div>
-    <slot>
-    </slot>
+    <b-overlay :show='loading'>
+      <slot>
+      </slot>
+    </b-overlay>
   </div>
 </template>
 
@@ -15,6 +17,12 @@
         data: () => ({
         }),
 
+        props:{
+          loading:{
+            type: Boolean,
+            default: false,
+          }
+        },
         methods: {
         }
     };

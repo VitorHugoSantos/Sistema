@@ -1,5 +1,5 @@
 <template>
-    <panel id="cadastroGastos">
+    <panel id="cadastroGastos" :loading='loadingPanel'>
         <div class="m-4">
             <div class="col-sm-12 row p-0 ml-3">
                 <div class="titulo col-sm-8 pl-0">
@@ -8,7 +8,8 @@
                 <div class="col-sm-4 pr-0" align="right">
                     <buttonCadastro
                         @clickButtonSalvar   ="salvarGasto"
-                        @clickButtonCancelar ="cancelar" />
+                        @clickButtonCancelar ="cancelar"
+                        :disabled="$v.$invalid"/>
                 </div>
             </div>
             <div><hr></div>
@@ -58,8 +59,10 @@
     import inputDataSimples from '@/components/Data/InputDataSimples.vue'
     import inputSimple from '@/components/Input/InputSimple.vue'
     import axios from 'axios'
+    import { required } from 'vuelidate/lib/validators'
+    import VueSweetalert2 from 'vue-sweetalert2';
 	export default {
-		name: 'agenda',
+		name: 'cadastroGastos',
         components: {
             panel,
             buttonCadastro,
@@ -67,6 +70,20 @@
             inputDataSimples,
             inputSimple,
 		},
+
+        validations: {
+            tipoGastoSelecionado:{
+                required,
+            },
+
+            valorSelecionado:{
+                required,
+            },
+
+            formaPagamentoSelecionada:{
+                required,
+            },
+        },
 
 		data: function() {
 			return { 
@@ -87,7 +104,8 @@
                 descricaoSelecionada      : '',
                 valorSelecionado          : '',
                 dataSelecionada           : [],
-                formaPagamentoSelecionada : []
+                formaPagamentoSelecionada : [],
+                loadingPanel              : false,
             }
 		},
 
@@ -114,6 +132,7 @@
             },
 
             salvarGasto(){
+                this.loadingPanel = true
                 axios.post('http://localhost:8000/api/cadastro/gastos/salvar',
                         {
                             'payamont'     :this.valorSelecionado,
@@ -124,7 +143,17 @@
                             
                         })
                     .then(dados => {
-                        console.log(dados)
+                        if(dados.status == 201){
+                            this.loadingPanel = false
+                            this.$router.push({ name: 'agendamento' })
+                        } else {
+                            this.loadingPanel = false
+                            VueSweetalert2.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Algo deu errado, tente novamente mais tarde',
+                            })
+                        }
                     });
             },
 

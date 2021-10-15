@@ -74,6 +74,10 @@
             this.data = this.value
           }
         },
+
+        mounted(){
+          this.changeData(this.data)
+        }
     };
 </script>
 <style lang="scss">
