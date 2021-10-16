@@ -27,8 +27,9 @@
     import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
     import panel from '@/components/Panel/Panel.vue'
     import axios from 'axios'
-    import VueSweetalert2 from 'vue-sweetalert2';
+    // import VueSweetalert2 from 'vue-sweetalert2';
     import { DateTime } from "luxon"
+    import Swal from 'sweetalert2'
 	export default {
 		name: 'agenda',
         components: {
@@ -61,10 +62,10 @@
                                 this.objt[i].title = dataTitle+' - '+this.objt[i].title
                             }
                         } else {
-                            VueSweetalert2.fire({
-                                icon: 'error',
+                            Swal.fire({
                                 title: 'Oops...',
                                 text: 'Algo deu errado, tente novamente mais tarde',
+                                icon: 'error',
                             })
                         }
                     });
@@ -87,18 +88,32 @@
             onDrop(item, date){
                 for(var i = 0; i < this.objt.length; i++){
                     if(this.objt[i].id == item.id){
-                        console.log(date)
-                        this.objt[i].startDate = date
+                        console.log(this.objt[i], date)
                         var data = DateTime.fromJSDate(
-                                        this.objt[i].startDate).toFormat('yyyy-LL-dd')
+                                                    date).toFormat('yyyy-LL-dd')
                         var hora = DateTime.fromFormat(
-                                        this.objt[i].startdate, 'yyyy-LL-dd HH:mm:ss')
-                                        .toFormat('HH:mm')
-                        this.objt[i].startdate = data+' '+hora
+                                                    this.objt[i].startdate, 'yyyy-LL-dd HH:mm:ss')
+                                                    .toFormat('HH:mm')
+                        this.objt[i]['dataEdicao'] = data+' '+hora
+                        var posicao = i
                         axios.post('http://localhost:8000/api/agenda/altera/horario',
                                     {'dado':this.objt[i]})
                             .then(dados => {
-                                console.log(dados)
+                                if(dados.status == 201){
+                                    this.objt[posicao].startDate = date
+                                    var data = DateTime.fromJSDate(
+                                                    this.objt[posicao].startDate).toFormat('yyyy-LL-dd')
+                                    var hora = DateTime.fromFormat(
+                                                    this.objt[posicao].startdate, 'yyyy-LL-dd HH:mm:ss')
+                                                    .toFormat('HH:mm')
+                                    this.objt[posicao].startdate = data+' '+hora
+                                } else if(dados.status == 202){
+                                    Swal.fire({
+                                        title: 'Oops..',
+                                        text: dados.data.message,
+                                        icon: 'warning',
+                                    })
+                                }
                             });
                     }
                 }

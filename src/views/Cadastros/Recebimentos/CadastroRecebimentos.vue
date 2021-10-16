@@ -81,7 +81,7 @@
 
 		data() {
 			return { 
-                optionsCategorias :[{ name: 'Penteados', value: 'P' },],
+                optionsCategorias :[{ name: 'Penteados', value: 'P' },{ name: 'Acessórios', value: 'A' },],
                 optionsPagamento  :[
                     { name: 'Cartão', value: 'C' },
                     { name: 'Dinheiro', value: 'D' },

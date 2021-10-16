@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-sm-4">
                     <inputSimple 
-                        text='Descrição'
+                        text='Descrição*'
                         placeholder='Digite aqui'
                         @changeInput='changeDescricao'/>
                 </div>
@@ -51,6 +51,10 @@
             acessorio:{
                 required,
             },
+
+            descricao:{
+                required,
+            }
         },
 
 		data: function() {

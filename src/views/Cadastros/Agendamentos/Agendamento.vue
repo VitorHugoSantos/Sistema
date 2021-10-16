@@ -163,7 +163,8 @@
     import inputDataSimples from '@/components/Data/InputDataSimples.vue'
     import buttonSimple from '@/components/Button/ButtonSimple.vue'
     import axios from 'axios'
-    import VueSweetalert2 from 'vue-sweetalert2';
+    // import VueSweetalert2 from 'vue-sweetalert2';
+    import Swal from 'sweetalert2'
     import { DateTime } from "luxon"
     import { required } from 'vuelidate/lib/validators'
 	export default {
@@ -211,7 +212,14 @@
 			return { 
                 optiosCliente : [],
                 optiosComprimentoCabelo:[{ name: 'Curto', value: 'C' },{ name: 'Medio', value: 'M' },{ name: 'Longo', value: 'L' }],
-                optionsTipoPenteado:[{ name: 'Tipo 1', value: '1' },{ name: 'Tipo 2', value: '2' },],
+                optionsTipoPenteado:[
+                        { name: 'Escova', value: 'E' },
+                        { name: 'Cachos', value: 'C' },
+                        { name: 'Sem preso', value: 'SP'},
+                        { name: 'Rabos', value: 'R'},
+                        { name: 'Coques', value: 'CQ'},
+                        { name: 'Noivas', value: 'N'},
+                        ],
                 optionsAcessorios:[],
                 testePenteado : false,
                 acessorios    : false,
@@ -292,12 +300,19 @@
                         if(dados.status == 201){
                             this.loadingPanel = false
                             this.$router.push({ name: 'agendamento' })
-                        } else {
+                        } else if(dados.status == 202){
                             this.loadingPanel = false
-                            VueSweetalert2.fire({
-                                icon: 'error',
+                            Swal.fire({
+                                title: 'Oops..',
+                                text: dados.data.message,
+                                icon: 'warning',
+                            })
+                        }else {
+                            this.loadingPanel = false
+                            Swal.fire({
                                 title: 'Oops...',
                                 text: 'Algo deu errado, tente novamente mais tarde',
+                                icon: 'error',
                             })
                         }
                     });
@@ -308,16 +323,20 @@
             },
 
             buscaCliente(){
+                this.loadingPanel = true
                 axios.post('http://localhost:8000/api/cadastro/agendamento/busca/cliente')
                     .then(dados => {
                         this.optiosCliente = dados.data.dados
+                        this.loadingPanel = false
                     });
             },
 
             buscaAcessorios(){
+                this.loadingPanel = true
                 axios.post('http://localhost:8000/api/cadastro/agendamento/busca/acessorios')
                     .then(dados => {
                         this.optionsAcessorios = dados.data.dados
+                        this.loadingPanel = false
                     });
             },
 
@@ -340,10 +359,10 @@
                             this.buscaCliente()
                         } else {
                             this.loadingPanel = false
-                            VueSweetalert2.fire({
-                                icon: 'error',
+                            Swal.fire({
                                 title: 'Oops...',
                                 text: 'Algo deu errado, tente novamente mais tarde',
+                                icon: 'error',
                             })
                         }
                     });

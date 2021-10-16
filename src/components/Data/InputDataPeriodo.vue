@@ -5,7 +5,7 @@
 *
 *
 * Eventos:
-*  1- change - Para passar a data para a página
+*  1- changeData - Para passar a data para a página
 *
 *
 * Informacoes:

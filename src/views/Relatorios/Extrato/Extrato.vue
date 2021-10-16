@@ -4,7 +4,11 @@
             <div class="titulo ml-3">
                 Extrato
             </div>
-            <div><hr></div>
+            <div class="col-sm-4">
+                <inputDataPeriodo 
+                    @changeData='changeData'/>
+            </div>
+            <div class="col-sm-12"><hr></div>
             <div class="col-sm-12 table">
                 <table>
                     <header>
@@ -16,12 +20,27 @@
                         </tr>
                     </header>
                     <body>
-                        <tr>
-                            <td>Data</td>
-                            <td>Descrição</td>
-                            <td>Observação</td>
-                            <td>Valor</td>
-                        </tr>
+                        <template v-for='(entrada, e) in dadosRelatorio.entrada'>
+                            <tr :key="e">
+                                <td>{{entrada.recdate}}</td>
+                                <td>{{entrada.recway == 'P' ? 'Penteados' : 'Acessórios'}}</td>
+                                <td>Observação</td>
+                                <td>{{entrada.recamount}}</td>
+                            </tr>
+                        </template>
+                        <template v-for='(saida, s) in dadosRelatorio.saida'>
+                            <tr :key="s">
+                                <td>{{saida.paydate}}</td>
+                                <td>{{saida.descricao}}</td>
+                                <td>Observação</td>
+                                <td>{{saida.valor}}</td>
+                            </tr>
+                        </template>
+                        <template>
+                            <tr>
+                                <td>{{dadosRelatorio.saldo}}</td>
+                            </tr>
+                        </template>
                     </body>
                 </table>
             </div>
@@ -30,10 +49,13 @@
 </template>
 <script>
     import panel from '@/components/Panel/Panel.vue'
+    import axios from 'axios'
+    import inputDataPeriodo from '@/components/Data/InputDataPeriodo'
 	export default {
 		name: 'agenda',
         components: {
             panel,
+            inputDataPeriodo,
 		},
 
 		data() {
@@ -44,13 +66,31 @@
                     { name: 'Sinatra', value: '3' },
                     { name: 'Laravel', value: '4', $isDisabled: true },
                     { name: 'Phoenix', value: '5' }
-                ]
+                ],
+                dataSelecionada: [],
+                dadosRelatorio : [],
             }
 		},
 
 		methods: {
-			
-		}
+
+            changeData(data){
+                this.dataSelecionada = data
+                console.log(this.dataSelecionada)
+                this.gerarRelatorio()
+            },
+
+			gerarRelatorio(){
+                axios.post('http://localhost:8000/api/relatorio/extrato/gerar/relatorio',
+                        {
+                            'data'   : this.dataSelecionada,
+                        })
+                    .then(dados => {
+                        this.dadosRelatorio = dados.data.dados
+                        console.log(dados)
+                    });
+            }
+		},
 	}
 </script>
 <style lang="scss">
