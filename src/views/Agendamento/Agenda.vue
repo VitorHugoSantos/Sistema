@@ -1,5 +1,5 @@
 <template>
-    <panel>
+    <panel :loading='loadingPanel'>
         <div id="agendamento" class="m-4">
             <div class="titulo ml-3">
                 Agendamentos
@@ -21,38 +21,108 @@
                 </CalendarView>
             </div>
         </div>
+        <div>
+            <b-modal 
+                id="dadosAgendamento"
+                :title="dadosAgendamento.title">
+                <div class="col-sm-12 row" v-if="dadosAgendamento.originalItem != undefined">
+                    <div class="col-sm-12"> Cliente : {{dadosAgendamento.originalItem.cliname}}</div>
+                    <div class="col-sm-12"> Tamanho do cabelo : 
+                        {{dadosAgendamento.originalItem.haisize == 'C' ? 'Curto' : 
+                        dadosAgendamento.originalItem.haisize == 'M' ? 'Médio' : 'longo'}}</div>
+
+                    <div class="col-sm-12"> Tipo do cabelo : 
+                        {{dadosAgendamento.originalItem.haitype == 'E' ? 'Escova' : 
+                        dadosAgendamento.originalItem.haitype == 'C' ? 'Cachos' :
+                        dadosAgendamento.originalItem.haitype == 'SP' ? 'Semi preso' :
+                        dadosAgendamento.originalItem.haitype == 'R' ? 'Rabos' :
+                        dadosAgendamento.originalItem.haitype == 'CQ' ? 'Coques' :
+                        dadosAgendamento.originalItem.haitype == 'N' ? 'Noivas' : ''}}</div>
+
+                    <div class="col-sm-12"> Data do agendamento : {{transformaData(dadosAgendamento.originalItem.startdate)}}</div>
+                    <div class="col-sm-12"> Tempo de execução : {{dadosAgendamento.originalItem.haiexetime}}</div>
+                    <div class="col-sm-12"> Data do evento : {{dadosAgendamento.originalItem.haieventtime}}</div>
+                    <div class="col-sm-12"> Tempo de deslocamento : {{dadosAgendamento.originalItem.haidistime}}</div>
+                </div>
+                <buttonSimple
+                    style="width:100%;"
+                    text="Editar"
+                    @clickButton="editarDataAgendamento">
+                </buttonSimple>
+            </b-modal>
+        </div>
+
+        <div>
+            <b-modal 
+                id="alteraAgendamento"
+                title="Alterar data do agandamento"
+                @ok='salvaEdicao'>
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <inputDataSimples 
+                            titulo='Data do penteado*'
+                            @changeData='changeDataPenteado'/>
+                    </div>
+                    <div class="col-sm-12 pr-0">
+                        <inputSimple 
+                            text='Hora do penteado*'
+                            type='time'
+                            placeholder='Digite aqui'
+                            @changeInput='changeHoraPenteado'/>
+                    </div>
+                </div>
+            </b-modal>
+        </div>
     </panel>
 </template>
 <script>
     import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
     import panel from '@/components/Panel/Panel.vue'
     import axios from 'axios'
-    // import VueSweetalert2 from 'vue-sweetalert2';
     import { DateTime } from "luxon"
     import Swal from 'sweetalert2'
+    import buttonSimple from '@/components/Button/ButtonSimple.vue'
+    import inputDataSimples from '@/components/Data/InputDataSimples.vue'
+    import inputSimple from '@/components/Input/InputSimple.vue'
 	export default {
 		name: 'agenda',
         components: {
 			CalendarView,
 			CalendarViewHeader,
             panel,
+            buttonSimple,
+            inputDataSimples,
+            inputSimple,
 		},
 
 		data: function() {
 			return { 
                 showDate: new Date(),
                 objt:[],
+                dadosAgendamento: [],
+                novaDataPenteado : [],
+                novaHoraPenteado : '',
+                loadingPanel : false,
             }
 		},
 
 		methods: {
+            changeDataPenteado(data){
+                this.novaDataPenteado = data;
+            },
+
+            changeHoraPenteado(hora){
+                this.novaHoraPenteado = hora;
+            },
 
             buscaAgendamentos(){
+                this.loadingPanel = true
                 axios.post('http://localhost:8000/api/agenda/busca/horarios')
                     .then(dados => {
                         if(dados.status == 200){
                             this.objt = dados.data.dados
                             for(var i = 0; i < this.objt.length; i++){
+                                console.log(dados.data.dados)
                                 var data = DateTime.fromFormat(
                                         this.objt[i].startdate, 'yyyy-LL-dd HH:mm:ss').toJSDate()
                                 var dataTitle = DateTime.fromFormat(
@@ -61,7 +131,9 @@
                                 this.objt[i].startDate = data
                                 this.objt[i].title = dataTitle+' - '+this.objt[i].title
                             }
+                            this.loadingPanel = false
                         } else {
+                            this.loadingPanel = false
                             Swal.fire({
                                 title: 'Oops...',
                                 text: 'Algo deu errado, tente novamente mais tarde',
@@ -81,6 +153,8 @@
 
             itemCalendario(item){
                 console.log(item)
+                this.dadosAgendamento = item
+                this.$bvModal.show('dadosAgendamento')
             },
 
             //Método para trocar a data do evento arrastando, 
@@ -117,6 +191,38 @@
                             });
                     }
                 }
+            },
+
+            editarDataAgendamento(){
+                this.$bvModal.hide('dadosAgendamento')
+                this.$bvModal.show('alteraAgendamento')
+            },
+
+            salvaEdicao(){
+                console.log(this.dadosAgendamento)
+                var data = DateTime.fromFormat(
+                                    this.novaDataPenteado, 'dd/LL/yyyy').toFormat('yyyy-LL-dd')
+                        var hora = this.novaHoraPenteado
+                        this.dadosAgendamento['dataEdicao'] = data+' '+hora
+                console.log(this.dadosAgendamento)
+                axios.post('http://localhost:8000/api/agenda/altera/horario',
+                            {'dado':this.dadosAgendamento})
+                    .then(dados => {
+                        if(dados.status == 201){
+                            this.buscaAgendamentos()
+                        } else if(dados.status == 202){
+                            Swal.fire({
+                                title: 'Oops..',
+                                text: dados.data.message,
+                                icon: 'warning',
+                            })
+                        }
+                    });
+            },
+
+            transformaData(data){
+                return DateTime.fromFormat(data, 'yyyy-LL-dd HH:mm:ss')
+                                .toFormat('dd/LL/yyyy HH:mm')
             },
 
             selecionados(selecionados){

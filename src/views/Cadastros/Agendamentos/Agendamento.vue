@@ -152,7 +152,6 @@
                 </div>
             </b-modal>
         </div>
-
     </panel>
 </template>
 <script>
@@ -215,7 +214,7 @@
                 optionsTipoPenteado:[
                         { name: 'Escova', value: 'E' },
                         { name: 'Cachos', value: 'C' },
-                        { name: 'Sem preso', value: 'SP'},
+                        { name: 'Semi preso', value: 'SP'},
                         { name: 'Rabos', value: 'R'},
                         { name: 'Coques', value: 'CQ'},
                         { name: 'Noivas', value: 'N'},

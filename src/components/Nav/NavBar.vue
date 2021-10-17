@@ -14,9 +14,9 @@
                         <b-dropdown-item href="#" @click='cadastroRecebimentos'>Recebimentos</b-dropdown-item>
                     </b-nav-item-dropdown>
                     <b-nav-item-dropdown href="#" text="Relatórios">
-                        <b-dropdown-item href="#">Procedimentos realizados</b-dropdown-item>
-                        <b-dropdown-item href="#">Procedimentos cancelados</b-dropdown-item>
-                        <b-dropdown-item href="#">Extrato</b-dropdown-item>
+                        <b-dropdown-item href="#" disable>Procedimentos realizados</b-dropdown-item>
+                        <b-dropdown-item href="#" disable>Procedimentos cancelados</b-dropdown-item>
+                        <b-dropdown-item href="#"  @click='Extrato'>Extrato</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
 
@@ -64,6 +64,10 @@
 
             cadastroGastos(){
                 this.$router.push({ name: 'cadastroGastos' })
+            },
+
+            Extrato(){
+                this.$router.push({ name: 'relatorioExtrato' })
             },
 
             sair(){
