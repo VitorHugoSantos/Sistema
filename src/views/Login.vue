@@ -33,12 +33,10 @@
                 </div>
             </div>
             <div class="col-sm-12 row">
-                <div class="col-sm-8 mt-3 pl-0 al-l cursor-pointer"
-                    @click='esqueceuSenha'>
+                <div class="col-sm-8 mt-3 pl-0 al-l cursor-pointer">
                     Esqueceu a senha?
                 </div>
-                <div class="col-sm-4 mt-3 pr-0 cursor-pointer"
-                    @click='cadastrar'>
+                <div class="col-sm-4 mt-3 pr-0 cursor-pointer">
                     Cadastrar
                 </div>
             </div>
@@ -50,7 +48,7 @@
 <script>
 import inputSimple from '@/components/Input/InputSimple.vue'
 import buttonSimple from '@/components/Button/ButtonSimple.vue'
-import axios from 'axios'
+// import axios from 'axios'
     export default {
         components: {
             inputSimple,
@@ -67,7 +65,6 @@ import axios from 'axios'
 
         methods: {
             changeEmail(emailSelecionado){
-                console.log('B', emailSelecionado)
                 this.form.email = emailSelecionado
             },
 
@@ -76,8 +73,7 @@ import axios from 'axios'
             },
 
             async submit () {
-                let results = await axios.post('http://localhost:8000/api/login/users', {'aa':'bb'});
-                console.log(results)
+                // let results = await axios.post('http://localhost:8000/api/login/users', {'aa':'bb'});
                 this.$router.push({ name: 'agendamento' })
                 // try {
                 //     await this.ActionDoLogin(this.form)
@@ -86,14 +82,6 @@ import axios from 'axios'
                 //     alert(err.data ? err.data.message : 'Não foi possível fazer login')
                 // }
             },
-
-            esqueceuSenha(){
-                console.log('Esqueceu a senhaaa')
-            },
-
-            cadastrar(){
-                console.log('Cadastrar')
-            }
         }
     };
 </script>

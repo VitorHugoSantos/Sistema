@@ -76,7 +76,6 @@
 
             changeData(data){
                 this.dataSelecionada = data
-                console.log(this.dataSelecionada)
                 this.gerarRelatorio()
             },
 

@@ -31,7 +31,7 @@
                         {{dadosAgendamento.originalItem.haisize == 'C' ? 'Curto' : 
                         dadosAgendamento.originalItem.haisize == 'M' ? 'Médio' : 'longo'}}</div>
 
-                    <div class="col-sm-12"> Tipo do cabelo : 
+                    <div class="col-sm-12"> Tipo do penteado : 
                         {{dadosAgendamento.originalItem.haitype == 'E' ? 'Escova' : 
                         dadosAgendamento.originalItem.haitype == 'C' ? 'Cachos' :
                         dadosAgendamento.originalItem.haitype == 'SP' ? 'Semi preso' :
@@ -41,7 +41,7 @@
 
                     <div class="col-sm-12"> Data do agendamento : {{transformaData(dadosAgendamento.originalItem.startdate)}}</div>
                     <div class="col-sm-12"> Tempo de execução : {{dadosAgendamento.originalItem.haiexetime}}</div>
-                    <div class="col-sm-12"> Data do evento : {{dadosAgendamento.originalItem.haieventtime}}</div>
+                    <div class="col-sm-12"> Hora do evento : {{dadosAgendamento.originalItem.haieventtime}}</div>
                     <div class="col-sm-12"> Tempo de deslocamento : {{dadosAgendamento.originalItem.haidistime}}</div>
                 </div>
                 <buttonSimple
@@ -122,7 +122,6 @@
                         if(dados.status == 200){
                             this.objt = dados.data.dados
                             for(var i = 0; i < this.objt.length; i++){
-                                console.log(dados.data.dados)
                                 var data = DateTime.fromFormat(
                                         this.objt[i].startdate, 'yyyy-LL-dd HH:mm:ss').toJSDate()
                                 var dataTitle = DateTime.fromFormat(
@@ -152,7 +151,6 @@
             },
 
             itemCalendario(item){
-                console.log(item)
                 this.dadosAgendamento = item
                 this.$bvModal.show('dadosAgendamento')
             },
@@ -162,7 +160,6 @@
             onDrop(item, date){
                 for(var i = 0; i < this.objt.length; i++){
                     if(this.objt[i].id == item.id){
-                        console.log(this.objt[i], date)
                         var data = DateTime.fromJSDate(
                                                     date).toFormat('yyyy-LL-dd')
                         var hora = DateTime.fromFormat(
@@ -199,12 +196,10 @@
             },
 
             salvaEdicao(){
-                console.log(this.dadosAgendamento)
                 var data = DateTime.fromFormat(
                                     this.novaDataPenteado, 'dd/LL/yyyy').toFormat('yyyy-LL-dd')
                         var hora = this.novaHoraPenteado
                         this.dadosAgendamento['dataEdicao'] = data+' '+hora
-                console.log(this.dadosAgendamento)
                 axios.post('http://localhost:8000/api/agenda/altera/horario',
                             {'dado':this.dadosAgendamento})
                     .then(dados => {
@@ -224,10 +219,6 @@
                 return DateTime.fromFormat(data, 'yyyy-LL-dd HH:mm:ss')
                                 .toFormat('dd/LL/yyyy HH:mm')
             },
-
-            selecionados(selecionados){
-                console.log(selecionados)
-            }
 		},
 
         mounted(){
